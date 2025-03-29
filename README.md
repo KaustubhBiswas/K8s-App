@@ -1,5 +1,36 @@
 # Node.js Kubernetes Deployment
 
+## System Setup
+
+1. **Setup Docker**
+
+   a. Install Docker Desktop and create an account.
+
+   b. Go to settings and Enable Kubernetes. Then click on **Apply and Restart**.
+
+   c. Install the dependencies and restart your system.
+
+2. **Setup Kubernetes**
+
+   a. Install Minikube and Kubectl from the official websites.
+
+   b. Add the path to the kubectl.exe file to Path in system variables.
+
+   c. Run the following command to check if kubectl has been installed successfully or not:
+
+      ```sh
+      kubectl version --client
+      ```
+      
+      The result should show the installed version of kubectl.
+
+   d. Run the following command to initiate a local Kuberetes cluster:
+
+      ```sh
+      minikube start
+      ```
+
+
 ## Steps to Deploy
 
 1. **Build Docker Image:**

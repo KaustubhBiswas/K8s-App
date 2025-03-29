@@ -14,13 +14,25 @@ spec:
     spec:
       containers:
         - name: node-app
-          image: kaustubhbiswas/node-app:latest
+          image: kaustubhbiswas/node-app:v3
+          volumeMounts:
+          - mountPath: /data
+            name: node-app-storage
           ports:
             - containerPort: 3000
+          envFrom: 
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: app-secret
           resources:
             limits:
               cpu: "500m"
               memory: "256Mi"
             requests:
-              cpu: "200m"
+              cpu: "100m"
               memory: "128Mi"
+      volumes:
+        - name: node-app-storage
+          persistentVolumeClaim:
+            claimName: node-app-pvc        
