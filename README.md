@@ -14,7 +14,7 @@
 
    a. Install Minikube and Kubectl from the official websites.
 
-   b. Add the path to the kubectl.exe file to Path in system variables.
+   b. Add the path to the kubectl.exe file to **Path** in environment variables.
 
    c. Run the following command to check if kubectl has been installed successfully or not:
 
