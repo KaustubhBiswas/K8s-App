@@ -20,7 +20,7 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/node-app:${{ github.sha }}
 
     - name: Trigger Deploy Workflow
-      uses: peter-evans/workflow-dispatch@v2
+      uses: peter-evans/repository_dispatch@v2
       with:
           token: ${{ secrets.GITHUB_TOKEN }}
           event-type: deploy-to-k8s
