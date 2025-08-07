@@ -14,5 +14,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Build and push the Docker image
+      run: |
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/node-app:${{ github.sha }} .
+        docker push ${{ secrets.DOCKER_USERNAME }}/node-app:${{ github.sha }}
+
+    - name: Trigger Deploy Workflow
+    - uses: peter-evans/workflow-dispatch@v1
+      with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event-type: deploy-to-k8s
+

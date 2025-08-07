@@ -1,0 +1,27 @@
+name: Deploy to Kubernetes
+
+on:
+  repository_dispatch:
+    types: [deploy-to-k8s]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Kubeconfig
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.29.0'
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl set image deployment/node-app node-app=${{ secrets.DOCKER_USERNAME }}/node-app:${{ github.sha }}
+
+      - name: Verify Pods
+        run: kubectl get pods
+
+      - name: Run Health Check
+        run: |
+          sleep 10
+          curl -f $(minikube service node-app-service --url) || exit 1
