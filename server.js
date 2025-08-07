@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
     res.json({
-        message: 'Hello from the *V3* Node.js app running on Kubernetes!',
+        message: 'Hello from the CI/CD Node.js app running on Kubernetes!',
         hostname: os.hostname()
     });
 });
