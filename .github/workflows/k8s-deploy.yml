@@ -16,7 +16,7 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          kubectl set image deployment/node-app node-app=${{ secrets.DOCKER_USERNAME }}/node-app:${{ github.sha }}
+          kubectl set image deployment/node-app node-app=${{ secrets.DOCKER_USERNAME }}/node-app:${{ github.event.client_payload.sha }}
 
       - name: Verify Pods
         run: kubectl get pods
