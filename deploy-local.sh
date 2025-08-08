@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-DOCKER_USER="kaustubhbiswas"   # change to your Docker Hub username
+DOCKER_USER="kaustubhbiswas"
 
 echo "Fetching latest commit SHA from GitHub..."
 COMMIT_SHA=$(git rev-parse HEAD)
