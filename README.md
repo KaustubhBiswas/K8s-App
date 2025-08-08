@@ -1,4 +1,17 @@
-# Node.js Kubernetes Deployment
+# Node.js Kubernetes CI/CD with Minikube
+
+## Prerequisites
+
+   Before running this project, install:
+   - [Docker](https://docs.docker.com/get-docker/)
+   - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
+   - [kubectl](https://kubernetes.io/docs/tasks/tools/)
+   - [Git](https://git-scm.com/)
+   - GitHub repository with:
+   - `DOCKER_USERNAME` secret
+   - `DOCKER_PASSWORD` secret
+
+---
 
 ## System Setup
 
@@ -64,3 +77,26 @@
    ```sh
    curl http://<EXTERNAL-IP>:<PORT>
    ```
+
+## CI/CD Workflow
+
+1. **CI: Build & Push**
+
+   -> Triggered automatically when you push to the main branch.
+
+   ->Builds Docker image.
+
+   -> Pushes image to Docker Hub.
+
+2. **CD: Local Deployment**
+
+   -> Run locally to pull and deploy the latest image (in git bash):
+   ```sh
+   ./deploy-local.sh
+   ```
+
+   -> Script will:
+      a. Fetch latest commit SHA from your local repo.
+      b. Update Kubernetes deployment to new image.
+      c. Wait for rollout to finish.
+
