@@ -1,32 +1,22 @@
-name: Docker Image CI
+name: Build and Push Docker Image
 
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Log in to Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-    - uses: actions/checkout@v4
-    - name: Build and push the Docker image
-      run: |
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/node-app:${{ github.sha }} .
-        docker push ${{ secrets.DOCKER_USERNAME }}/node-app:${{ github.sha }}
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/node-app:${{ github.sha }} .
 
-    - name: Trigger Deploy Workflow
-      uses: peter-evans/repository-dispatch@v2
-      with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          event-type: deploy-to-k8s
-          client-payload: '{"sha": "${{ github.sha }}"}'
-
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/node-app:${{ github.sha }}
